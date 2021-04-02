@@ -7,7 +7,7 @@
 <script>
 function darOi() {
     argumentos = document.getElementById('pessoas').value
-    Server.oiMundo(argumentos).then(response => response.json() )
+    Biju.oiMundo(argumentos).then(response => response.json() )
         .then((response) => {
             if (response.tudoCerto) {
                 target = document.getElementById('target');

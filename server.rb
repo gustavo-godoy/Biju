@@ -3,7 +3,7 @@ require 'sinatra/base'
 require 'rack/contrib'
 require 'json'
 
-class App < Sinatra::Base
+class Biju < Sinatra::Base
 
   #####
   # Middleware
@@ -64,4 +64,4 @@ class App < Sinatra::Base
   end
 end
 
-App.run!
+Biju.run!

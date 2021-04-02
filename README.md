@@ -1,6 +1,6 @@
-# Bijuteria
+# Biju
 
-Bijuteria é um projeto simples com o objetivo de criar uma pequena 
+Biju é um projeto simples com o objetivo de criar uma pequena 
 plataforma para scripts locais. A idéia é tornar fácil o desenvolvimento 
 de pequenos "webapps" que expõe executáveis do sistema.
 

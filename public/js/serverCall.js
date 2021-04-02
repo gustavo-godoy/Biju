@@ -8,8 +8,6 @@ callHandler = {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({'_args': args})
             });
-            
-            //console.log(JSON.stringify({'_args': args}))
 
             return response;
         }
@@ -22,4 +20,4 @@ proxyHandler = {
     }
 }
 
-Server = new Proxy(callHandler, proxyHandler);
+Biju = new Proxy(callHandler, proxyHandler);
