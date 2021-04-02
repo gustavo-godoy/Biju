@@ -11,6 +11,10 @@ class App < Sinatra::Base
     erb :index
   end
 
+  get '/ola-mundo' do
+    erb :ola_mundo
+  end
+
   # Tudo em ./run/ é exposto!
   # Usando patch por conveniência, mesmo não sendo semântico.
   patch '/run/:service' do |service|
