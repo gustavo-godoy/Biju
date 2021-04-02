@@ -1,3 +1,10 @@
-#!/usr/bin/sh
+#!/usr/bin/env ruby
 
-echo "Oi, Mundo!"
+if ARGV.empty?
+   puts  "Oi, Mundo!"
+elsif ARGV.length == 1
+   puts "Oi, #{ARGV[0]}!"
+else
+   puts "Oi, #{ARGV[0...-1].join(', ')} e #{ARGV[-1]}!"
+end
+

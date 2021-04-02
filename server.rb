@@ -3,9 +3,26 @@ require 'sinatra/base'
 
 class App < Sinatra::Base
 
-  ####
-  # Router
-  ####
+  #####
+  # POST - rodar scripts
+  #####
+
+  # Tudo em ./run/ é exposto!
+  post '/run/:_service' do |_service|
+    _args = Array(params['_args']).join(' ')
+
+    begin
+      retorno = `./run/#{_service} #{_args}`
+    rescue
+      return nil
+    end
+
+    retorno
+  end
+
+  #####
+  # GET Router
+  #####
 
   get '/' do
     erb :index
@@ -15,19 +32,13 @@ class App < Sinatra::Base
     erb :ola_mundo
   end
 
-  # Tudo em ./run/ é exposto!
-  # Usando patch por conveniência, mesmo não sendo semântico.
-  patch '/run/:service' do |service|
-    `run/#{service}`
-  end
+  #####
+  # 404
+  #####
 
   not_found do
-    if true #request.get?
-      status 404
-      erb :q0q
-    else
-      "404 - Not Found"
-    end
+    status 404
+    erb :q0q
   end
 end
 
