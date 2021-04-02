@@ -55,8 +55,21 @@ class Biju < Sinatra::Base
   end
   
   #####
-  # 404
+  # Auto e 404
   #####
+
+  get '/:outros' do |arquivo|
+    arquivo = "auto/#{arquivo}"
+
+    puts arquivo
+    puts "views/#{arquivo}.erb"
+
+    if File.exist? "views/#{arquivo}.erb"
+      erb arquivo.to_sym
+    else
+      not_found
+    end
+  end
 
   not_found do
     status 404
