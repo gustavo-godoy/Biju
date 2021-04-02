@@ -6,6 +6,11 @@ class App < Sinatra::Base
       "OK!"
    end
 
+   # Anything in ./run/ is public runnable!
+   get '/run/:service' do |service|
+     `run/#{service}`
+   end
+
 end
 
 App.run!
