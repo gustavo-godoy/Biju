@@ -1,7 +1,16 @@
 #!/usr/bin/env ruby
 require 'sinatra/base'
+require 'rack/contrib'
+require 'json'
 
 class App < Sinatra::Base
+
+  #####
+  # Middleware
+  #####
+
+  # Corrige bug de processamento de POST do Sinatra
+  use Rack::JSONBodyParser
 
   #####
   # POST - rodar scripts
@@ -9,15 +18,28 @@ class App < Sinatra::Base
 
   # Tudo em ./run/ é exposto!
   post '/run/:_service' do |_service|
-    _args = Array(params['_args']).join(' ')
-
+  
+    content_type :json
+    
+    _args = Array(params['_args'])
+    _args = _args.map {|item| "'#{item}'"}
+    _args = _args.join(' ')
+    
     begin
-      retorno = `./run/#{_service} #{_args}`
-    rescue
-      return nil
+      tudoCerto = true
+      resposta = `./run/#{_service} #{_args}`
+    rescue => putslamerda
+      tudoCerto = false
+      resposta = nil
+      
+      p '[DEBUG <---'
+      puts putslamerda
+      p '---> DEBUG]'
+    ensure
+      retorno = {tudoCerto: tudoCerto, resposta: resposta}
     end
-
-    retorno
+    
+    JSON.generate(retorno)
   end
 
   #####
@@ -28,10 +50,10 @@ class App < Sinatra::Base
     erb :index
   end
 
-  get '/ola-mundo' do
-    erb :ola_mundo
+  get '/oi-mundo' do
+    erb :oi_mundo
   end
-
+  
   #####
   # 404
   #####

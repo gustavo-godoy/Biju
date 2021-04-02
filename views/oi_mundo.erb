@@ -1,0 +1,18 @@
+<p>Dar oi para quem?<p>
+<input type='text' id='pessoas'/>
+<button onclick='darOi()'> Enviar!</button>
+<p id='target'></small>Seu 'Oi' vai aparecer aqui!<small></p>
+
+
+<script>
+function darOi() {
+    argumentos = document.getElementById('pessoas').value
+    Server.oiMundo(argumentos).then(response => response.json() )
+        .then((response) => {
+            if (response.tudoCerto) {
+                target = document.getElementById('target');
+	            target.innerHTML = response.resposta;
+            }
+        })
+}
+</script>
