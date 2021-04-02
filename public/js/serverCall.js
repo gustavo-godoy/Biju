@@ -3,11 +3,21 @@
 callHandler = {
     caller: function(service) {
         return function _caller(...args){
+        
+            function stringifyReplacer(key, value) {
+                if (value == null || value == ""){
+                    return undefined;
+                }
+                return value;
+            }
+            
+            
             response = fetch('/run/'+service, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({'_args': args})
+                body: JSON.stringify({'_args': args}, stringifyReplacer)
             });
+            
 
             return response;
         }

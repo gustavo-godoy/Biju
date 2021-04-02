@@ -2,6 +2,7 @@
 require 'sinatra/base'
 require 'rack/contrib'
 require 'json'
+require 'open3'
 
 class Biju < Sinatra::Base
 
@@ -21,20 +22,23 @@ class Biju < Sinatra::Base
   
     content_type :json
     
-    _args = Array(params['_args'])
-    _args = _args.map {|item| "'#{item}'"}
-    _args = _args.join(' ')
-    
     begin
       tudoCerto = true
-      resposta = `./run/#{_service} #{_args}`
+
+      if params['_args']
+        _args = Array(params['_args']).join(' ')
+        resposta, status = Open3.capture2("./run/#{_service}", _args)
+      else
+        resposta, status = Open3.capture2("./run/#{_service}")
+      end
+      
     rescue => putslamerda
       tudoCerto = false
       resposta = nil
       
-      p '[DEBUG <---'
+      puts '[DEBUG <---'
       puts putslamerda
-      p '---> DEBUG]'
+      puts '---> DEBUG]'
     ensure
       retorno = {tudoCerto: tudoCerto, resposta: resposta}
     end
