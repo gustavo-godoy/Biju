@@ -1,12 +1,21 @@
 <p>Dar oi para quem?<p>
-<input type='text' id='pessoas'/>
+<input type='text' id='pessoa1'/>
+<input type='text' id='pessoa2'/>
+<input type='text' id='pessoa3'/>
 <button onclick='darOi()'> Enviar!</button>
 <p id='target'></small>Seu 'Oi' vai aparecer aqui!<small></p>
 
 
 <script>
 function darOi() {
-    argumentos = document.getElementById('pessoas').value
+    argumentos = [
+        document.getElementById('pessoa1').value,
+        document.getElementById('pessoa2').value,
+        document.getElementById('pessoa3').value
+    ]
+    
+    console.log(argumentos)
+        
     Biju.oiMundo(argumentos).then(response => response.json() )
         .then((response) => {
             if (response.tudoCerto) {
@@ -15,4 +24,6 @@ function darOi() {
             }
         })
 }
+
+darOi();
 </script>

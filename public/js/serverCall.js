@@ -9,8 +9,7 @@ callHandler = {
                     return undefined;
                 }
                 return value;
-            }
-            
+            }            
             
             response = fetch('/run/'+service, {
                 method: 'POST',
