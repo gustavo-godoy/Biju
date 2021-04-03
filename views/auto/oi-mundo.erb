@@ -13,17 +13,14 @@ function darOi() {
         document.getElementById('pessoa2').value,
         document.getElementById('pessoa3').value
     ]
-    
-    console.log(argumentos)
-        
-    Biju.oiMundo(argumentos).then(response => response.json() )
-        .then((response) => {
-            if (response.tudoCerto) {
+
+    callback = function (response) {
+        if (response.tudoCerto) {
                 target = document.getElementById('target');
 	            target.innerHTML = response.resposta;
             }
-        })
-}
+    }
 
-darOi();
+    Biju.oiMundo(argumentos, callback)
+}
 </script>
