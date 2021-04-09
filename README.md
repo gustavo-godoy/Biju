@@ -1,80 +1,75 @@
 # Biju
 
-Biju é um projeto simples baseado na plataforma Sinatra com o objetivo
-de criar uma micro-webApp para usar como interface para uma estrutura
-de scripts locais, de maneira fácil e simples, mas flexivel e potente.
+Biju é um projeto simples baseado na plataforma [Sinatra](http://sinatrarb.com/)
+que permite criar micro-webApps como interface para scripts locais, de uma forma
+fácil e simples, mas flexivel e potente (tomara!).
 
 O nome "Biju" remete à bijuterias. Muitos projetos baseados em Ruby
-usam nomes relacionados a joias. O nome reflete a simplicidade e
-acessibilidade do projeto.
+usam nomes relacionados a joias, por isso o nome.
 
 ## Instalação
 
-O projeto foi criado em Linux, mas deve ser fácil adaptar para Windows
+O projeto foi criado em Linux, mas em breve deverá ser adaptado para
+Windows também.
 
-É preciso ter Ruby versão 2.7 e Bundle instalados. O projeto assume
-que o Ruby está em seu PATH.
+É preciso ter Ruby versão 2.7 e Bundle instalados.
 
 Basta clonar o projeto e usar `bundle install` para instalar as
 dependencias.
 
-## Uso
+Note que o exemplo incluso no projeto assume que Ruby está
+instalado em seu PATH.
 
-O uso do projeto é simples, mas permite uma enorme flexibilidade.
-O projeto vem com um exemplo "oi-mundo".   
-Podemos dividir o processo em 3 etapas:
+## Uso
 
 ### Etapa 1: expor os executáveis.
 
-Para isto basta incluir os executáveis desejados na pasta `run/`.  
-Como exemplo vamos considerar o arquivo `run/fazAlgo`.
+Para isto basta incluir os executáveis desejados na pasta `run/`.
 
+Como exemplo vamos considerar o arquivo `run/oiMundo`.
 
 ### Etapa 2: criando a interface
 
-**Modificando ou criando um arquivo**
-Para criar ou modificar um arquivo na pasta `views/`.
+**Criando ou modificando uma página**
 
-O arquivo `layout.erb` fornece o template principal e todos os
-demais arquivos são renderizados dentro da tag `<body>` do layout.
-É preciso cuidado ao modificar este arquivo, já que o funcionamento
-correto de todo projeto depende dele
+O arquivo `views/index.erb` é a frontpage do WebApp, então é um bom ponto
+de partida. Não se preocupe com a extensão `.erb` - ela é apenas HTML5
+extendido por Ruby, mas qualquer código HTML5 puro é um erb válido.
 
-O arquivo `index.erb` é a frontpage do WebApp, então é um bom ponto
-de partida.
+Note que as páginas incluem apenas o conteúdo da tag `<body>` pois
+tudo é encapsulado dentro do layout disponível em `views/layout.erb`.
 
-Se desejar adicionar um novo arquivo, então o mais fácil é adicionar
-à pasta `views/auto/`. Os arquivos nesta página são automaticamente
-roteados pelo servidor (se preferir incluir na pasta `views/` vai
-precisar manualmente incluir a rota no arquivo `server.rb`.).  
-Assim, por exemplo, o arquivo `views/auto/painel.erb` será 
-automaticamente disponibilizado em `http://localhost:4567/painel`.
+Para uma nova página crie um arquivo na pasta `views/auto/`
+Os arquivos nesta página são automaticamente roteados pelo servidor
+Assim, por exemplo, o arquivo `views/auto/oiMundo.erb` será 
+automaticamente disponibilizado em `http://localhost:4567/oiMundo`.
 
-Todos os arquivos devem estar com a extensão`.erb`, mas pode-se usar
-HTML5 normalmente no seu arquivo. Para rodar códigos server-side,
-basta usar a sintaxe `<%= código em Ruby >` e o Sinatra irá rodar
-o código enquanto renderiza a página.
+O projeto já vem com [MVP.css](https://andybrewer.github.io/mvp/) 
+para permitir que o desenvolvimento se inicie o quanto antes.
 
-**Acessando um executável**
+**Acessando um executável por JavaScript**
 
-Os executáveis podem ser acessados pela interface via JavaScript,
-como uma função do objeto `Biju`. Usando o exemplo de um executável
-`run/fazAlgo`, podemos chamar `Biju.fazAlgo("argumentos", "aqui")`.  
-O script retorna um objeto Promise e o servidor irá executar:
+Os executáveis podem ser chamados direto na página por JavaScript,
+como uma função do objeto `Biju`.Pode-se passar quantos argumentos
+quiser, mas o último argumento deverá ser sempre uma função de 
+callback. Usando o exemplo de `run/oiMundo`, podemos chamar
+`Biju.oiMundo(console.log)` e teremos "Oi, Mundo!" no console.
 
-        `run/fazAlgo argumentos aqui`
+Os argumentos são passados diretamente na linha de comando. Ou seja,
+`Biju.oiMundo('Fulana', 'Ciclano', console.log)` irá ser processada
+no servidor como `./run/oiMundo "Fulana" "Ciclano"`.
 
-Então basta definir os callbacks para a Promise retornada, que serão
-executados quando o servidor terminar de rodar o código. O retorno é
-um JSON contendo a propriedade `tudoCerto`, que indica se o código
-rodou corretamente (provavelmente só será `false` se o executável
-não for localizado na pasta `run/`) e a propriedade `resposta`, que
-contem a saída do script rodado.
+O servidor retorna um JSON de resposta, contendo:
 
+ - `status`: Deverá ser 0 se tudo ocorrer bem.
+ - `mensagem`: A mensagem de saída do sistema
+ - `erro`: Saída do STDERR
+ 
+Com estas informações é possível processar o callback
 
 ### Etapa 3: rodar o servidor
 
-Basta rodar o executável `server.rb`.
+Basta executar o arquivo `server.rb` e acessar `http:/localhost:4567/`
 
 ## Contribuindo
 
