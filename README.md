@@ -4,9 +4,6 @@ Biju é um projeto simples baseado na plataforma Sinatra com o objetivo
 de criar uma micro-webApp para usar como interface para uma estrutura
 de scripts locais, de maneira fácil e simples, mas flexivel e potente.
 
-O projeto é parcialmente inspirado no Python Eel, mas não tenta
-fazer a mesma coisa.
-
 O nome "Biju" remete à bijuterias. Muitos projetos baseados em Ruby
 usam nomes relacionados a joias. O nome reflete a simplicidade e
 acessibilidade do projeto.
