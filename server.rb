@@ -38,16 +38,16 @@ class Biju < Sinatra::Base
         
         _args.reject! {|item| item.to_s.empty?}
         
-        resposta, erro, status = Open3.capture3("./run/#{_service}", *_args)
+        mensagem, erro, status = Open3.capture3("./run/#{_service}", *_args)
       else
-        resposta, erro, status = Open3.capture3("./run/#{_service}")
+        mensagem, erro, status = Open3.capture3("./run/#{_service}")
       end
 
     status = status.exitstatus
     
     rescue Errno::ENOENT # Não encontrado
       status = 127
-      resposta = ''
+      mensagem = ''
       erro = 'Não encontrado'
 
     rescue => putslamerda
@@ -57,10 +57,10 @@ class Biju < Sinatra::Base
       puts '---> DEBUG]'
       
       status = 1
-      resposta = ''
+      mensagem = ''
       erro = putslamerda.message
     ensure
-      retorno = {status: status, erro: erro, resposta: resposta}
+      retorno = {status: status, erro: erro, mensagem: mensagem}
     end
 
     JSON.generate(retorno)

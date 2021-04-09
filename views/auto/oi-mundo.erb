@@ -17,7 +17,7 @@ function darOi() {
     let callback = function (resposta) {
         if (resposta.status == 0) {
                 target = document.getElementById('target');
-	            target.innerHTML = resposta.resposta;
+	            target.innerHTML = resposta.mensagem;
             }
         else {
             console.log('Erro ' + resposta.status + ' com mensagem: "' + resposta.erro + '"')
