@@ -22,8 +22,6 @@ class Biju < Sinatra::Base
     content_type :json
     
     begin
-      tudoCerto = true
-
       if params['_args']
         _args = Array(params['_args'])
         
@@ -32,22 +30,31 @@ class Biju < Sinatra::Base
         
         _args.reject! {|item| item.to_s.empty?}
         
-        resposta, status = Open3.capture2("./run/#{_service}", *_args)
+        resposta, erro, status = Open3.capture3("./run/#{_service}", *_args)
       else
-        resposta, status = Open3.capture2("./run/#{_service}")
+        resposta, erro, status = Open3.capture3("./run/#{_service}")
       end
-      
-    rescue => putslamerda
-      tudoCerto = false
-      resposta = nil
-      
-      puts '[DEBUG <---'
-      puts putslamerda
-      puts '---> DEBUG]'
-    ensure
-      retorno = {tudoCerto: tudoCerto, resposta: resposta}
-    end
+
+    status = status.exitstatus
     
+    rescue Errno::ENOENT # Não encontrado
+      status = 127
+      resposta = ''
+      erro = 'Não encontrado'
+
+    rescue => putslamerda
+      puts '[DEBUG <---'
+      puts putslamerda.class
+      puts putslamerda.message
+      puts '---> DEBUG]'
+      
+      status = 1
+      resposta = ''
+      erro = putslamerda.message
+    ensure
+      retorno = {status: status, erro: erro, resposta: resposta}
+    end
+
     JSON.generate(retorno)
   end
 

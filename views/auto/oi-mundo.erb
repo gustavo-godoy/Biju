@@ -8,17 +8,20 @@
 
 <script>
 function darOi() {
-    argumentos = [
+    let argumentos = [
         document.getElementById('pessoa1').value,
         document.getElementById('pessoa2').value,
         document.getElementById('pessoa3').value
     ]
 
-    callback = function (response) {
-        if (response.tudoCerto) {
+    let callback = function (resposta) {
+        if (resposta.status == 0) {
                 target = document.getElementById('target');
-	            target.innerHTML = response.resposta;
+	            target.innerHTML = resposta.resposta;
             }
+        else {
+            console.log('Erro ' + resposta.status + ' com mensagem: "' + resposta.erro + '"')
+        }
     }
 
     Biju.oiMundo(argumentos, callback)

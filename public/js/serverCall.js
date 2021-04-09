@@ -1,6 +1,6 @@
-"use strict;"
+"use strict"
 
-callHandler = {
+let callHandler = {
     caller: function(service) {
         return function _caller(...args){
 
@@ -9,7 +9,7 @@ callHandler = {
                 throw "Exception: Pelo menos um argumento (callback) é necessário."
             }
 
-            callback = args.pop()
+            let callback = args.pop()
             
             if ( !(callback instanceof Function) ){
                 throw "Exception: Ultimo argumento precisa ser uma função para callback"
@@ -23,7 +23,7 @@ callHandler = {
                 return value;
             }
 
-            response = fetch('/run/'+service, {
+            let response = fetch('/run/'+service, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({'_args': args}, stringifyReplacer)
@@ -34,10 +34,10 @@ callHandler = {
     }
 }
 
-proxyHandler = {
+let proxyHandler = {
     get: function (target, property) {
         return target.caller(property);
     }
 }
 
-Biju = new Proxy(callHandler, proxyHandler);
+let Biju = new Proxy(callHandler, proxyHandler);
