@@ -7,6 +7,14 @@ require 'open3'
 class Biju < Sinatra::Base
 
   #####
+  # Variaveis / Configurações
+  #####
+  
+  @@Titulo = "Biju"
+  @@Ver = "v1.2"
+  set :port, 4567
+
+  #####
   # Middleware
   #####
 
@@ -87,6 +95,19 @@ class Biju < Sinatra::Base
     status 404
     erb :q0q
   end
+  
+  #####
+  # Funções auxíliares
+  #####
+  
+  def self.Titulo
+    @@Titulo
+  end
+  
+  def self.Ver
+    @@Ver
+  end
+  
 end
 
 Biju.run!
