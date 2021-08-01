@@ -9,9 +9,9 @@ class Biju < Sinatra::Base
   #####
   # Variaveis / Configurações
   #####
-  
+
   @@Titulo = "Biju"
-  @@Ver = "v1.2"
+  @@Ver = "v1.2.2"
   set :port, 4567
 
   #####
@@ -28,23 +28,23 @@ class Biju < Sinatra::Base
   # Tudo em ./run/ é exposto!
   post '/run/:_service' do |_service|
     content_type :json
-    
+
     begin
       if params['_args']
         _args = Array(params['_args'])
-        
+
         # Pode gerar bugs no futuro. Não sei. Por em quanto vou deixar:
         _args.flatten!
-        
+
         _args.reject! {|item| item.to_s.empty?}
-        
+
         mensagem, erro, status = Open3.capture3("./run/#{_service}", *_args)
       else
         mensagem, erro, status = Open3.capture3("./run/#{_service}")
       end
 
     status = status.exitstatus
-    
+
     rescue Errno::ENOENT # Não encontrado
       status = 127
       mensagem = ''
@@ -55,7 +55,7 @@ class Biju < Sinatra::Base
       puts putslamerda.class
       puts putslamerda.message
       puts '---> DEBUG]'
-      
+
       status = 1
       mensagem = ''
       erro = putslamerda.message
@@ -95,19 +95,19 @@ class Biju < Sinatra::Base
     status 404
     erb :q0q
   end
-  
+
   #####
   # Funções auxíliares
   #####
-  
+
   def self.Titulo
     @@Titulo
   end
-  
+
   def self.Ver
     @@Ver
   end
-  
+
 end
 
 Biju.run!
