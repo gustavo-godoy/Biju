@@ -6,6 +6,11 @@ mas NÃO adere ao Semantic Versioning.
 
 ## [Versão Futura]
 
+## [1.2.2] 2021-08-01
+
+### Modificado
+ - CSS default agora é o Meyer's Reset, não MVP.css
+
 ## [1.2.1] 2021-04-09
 
 ### Adicionado
